@@ -283,6 +283,10 @@ func (c *Client) AccountTransactions(accountID int64, startDate time.Time, endDa
 		return nil, err
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("CAD API returned status code %d", resp.StatusCode)
+	}
+
 	defer resp.Body.Close()
 
 	decoder := json.NewDecoder(resp.Body)
